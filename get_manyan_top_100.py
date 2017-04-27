@@ -31,7 +31,7 @@ def parse_one_page(html):
         
 def write2file(content):
     with open("result.txt", 'a', encoding='utf-8') as f:
-        f.write(json.dumps(content, ensure_ascii=False)+'\n')
+        f.write(json.dumps(content, ensure_ascii=False) + '\n')
         f.close()
 
 
