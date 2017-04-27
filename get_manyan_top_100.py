@@ -2,7 +2,7 @@ import requests
 import re
 import json
 from requests.exceptions import RequestException
-from multiprocessing import Pool
+import multiprocessing
 
 def get_one_page(url):
     try:
@@ -35,15 +35,16 @@ def write2file(content):
         f.close()
 
 
-def main(page):
-    url = "http://maoyan.com/board/4?offset=" + str(page)
+def main(offset):
+    url = "http://maoyan.com/board/4?offset=" + str(offset)
     html = get_one_page(url)
     for item in parse_one_page(html):
         print(item)
         write2file(item)
 
 if __name__ == '__main__':
-    pool = Pool(10)
+    pool_size = multiprocessing.cpu_count()
+    pool = multiprocessing.Pool(processes=pool_size)
     pool.map(main, [i for i in range(0,100,10)])
     print('Done')
 
